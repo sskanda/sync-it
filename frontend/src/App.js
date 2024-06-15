@@ -1,8 +1,22 @@
 import logo from "./logo.svg";
 import "./App.css";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
-  return <div className="App">Welcome</div>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
