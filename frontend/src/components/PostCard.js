@@ -1,15 +1,8 @@
 import React from "react";
 
-import { Box } from "@mui/system";
-import {
-  Button,
-  Card,
-  IconButton,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Card, Stack, Typography } from "@mui/material";
 import LikeBox from "./LikeBox";
+import "./PostCard.css";
 import PostContentBox from "./PostContentBox";
 const PostCard = (props) => {
   return (
@@ -18,9 +11,30 @@ const PostCard = (props) => {
       sx={{ padding: 0 }}
       className="post-card"
     >
-      <div>{props.post.poster}</div>
-      <div>{props.post.title}</div>
-      <div>{props.post.content}</div>
+      <Stack
+        justifyContent="space-between "
+        alignItems="center"
+        spacing={1}
+        sx={{
+          backgroundColor: "grey.100",
+          width: "50px",
+        }}
+      >
+        <LikeBox />
+      </Stack>
+      <PostContentBox post={props.post}>
+        <div>{props.post.poster}</div>
+        <Typography
+          style={{ marginLeft: "10px" }}
+          variant="h5"
+          gutterBottom
+          sx={{ overflow: "hidden", mt: 1, maxHeight: 125 }}
+          className="title"
+        >
+          {props.post.title}
+        </Typography>
+        <div>{props.post.content}</div>
+      </PostContentBox>
     </Card>
   );
 };
