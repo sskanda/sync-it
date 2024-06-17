@@ -4,6 +4,9 @@ import { Card, Stack, Typography } from "@mui/material";
 import LikeBox from "./LikeBox";
 import "./PostCard.css";
 import PostContentBox from "./PostContentBox";
+import ContentDetails from "./ContentDetails";
+import { AiFillMessage } from "react-icons/ai";
+import HorizontalStack from "./util/HorizontalStack";
 const PostCard = (props) => {
   return (
     <Card
@@ -23,7 +26,7 @@ const PostCard = (props) => {
         <LikeBox />
       </Stack>
       <PostContentBox post={props.post}>
-        <div>{props.post.poster}</div>
+        <ContentDetails username={props.post.poster} />
         <Typography
           style={{ marginLeft: "10px" }}
           variant="h5"
@@ -34,6 +37,18 @@ const PostCard = (props) => {
           {props.post.title}
         </Typography>
         <div>{props.post.content}</div>
+        <HorizontalStack sx={{ mt: 2 }} justifyContent="space-between">
+          <HorizontalStack>
+            <AiFillMessage />
+            <Typography
+              variant="subtitle2"
+              color="text.secondary"
+              sx={{ fontWeight: "bold" }}
+            >
+              67
+            </Typography>
+          </HorizontalStack>
+        </HorizontalStack>
       </PostContentBox>
     </Card>
   );
