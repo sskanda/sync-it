@@ -26,29 +26,30 @@ const PostCard = (props) => {
         <LikeBox />
       </Stack>
       <PostContentBox post={props.post}>
-        <ContentDetails username={props.post.poster} />
-        <Typography
-          style={{ marginLeft: "10px" }}
-          variant="h5"
-          gutterBottom
-          sx={{ overflow: "hidden", mt: 1, maxHeight: 125 }}
-          className="title"
-        >
-          {props.post.title}
-        </Typography>
-        <div>{props.post.content}</div>
-        <HorizontalStack sx={{ mt: 2 }} justifyContent="space-between">
-          <HorizontalStack>
-            <AiFillMessage />
-            <Typography
-              variant="subtitle2"
-              color="text.secondary"
-              sx={{ fontWeight: "bold" }}
-            >
-              67
-            </Typography>
+        <div style={{ padding: "1rem" }}>
+          <ContentDetails username={props.post.poster} />
+          <Typography
+            variant="h5"
+            gutterBottom
+            sx={{ overflow: "hidden", mt: 1, maxHeight: 125 }}
+            className="title"
+          >
+            {props.post.title}
+          </Typography>
+          <div>{props.post.content}</div>
+          <HorizontalStack sx={{ mt: 2 }} justifyContent="space-between">
+            <HorizontalStack>
+              <AiFillMessage />
+              <Typography
+                variant="subtitle2"
+                color="text.secondary"
+                sx={{ fontWeight: "bold" }}
+              >
+                67
+              </Typography>
+            </HorizontalStack>
           </HorizontalStack>
-        </HorizontalStack>
+        </div>
       </PostContentBox>
     </Card>
   );

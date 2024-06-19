@@ -15,12 +15,6 @@ const PostEditor = () => {
           </Typography>
         </HorizontalStack>
 
-        <Typography>
-          <a href="https://commonmark.org/help/" target="_blank">
-            Markdown Help
-          </a>
-        </Typography>
-
         <Box component="form">
           <TextField
             fullWidth
