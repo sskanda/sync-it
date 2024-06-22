@@ -4,7 +4,6 @@ const Post = require("../models/post");
 const createPost = async (req, res) => {
   try {
     const { poster, title, content } = req.body;
-    console.log(poster);
 
     // if (!(title && content)) {
     //   throw new Error("All input required");
