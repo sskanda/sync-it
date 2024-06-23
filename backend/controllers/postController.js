@@ -36,7 +36,31 @@ const getPosts = async (req, res) => {
   }
 };
 
+const getPost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const { userId } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      throw new Error("Post does not exist");
+    }
+
+    const post = await Post.findById(postId)
+      .populate("poster", "-password")
+      .lean();
+
+    if (!post) {
+      throw new Error("Post does not exist");
+    }
+
+    return res.json(post);
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   createPost,
   getPosts,
+  getPost,
 };
