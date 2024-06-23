@@ -3,16 +3,16 @@ const Post = require("../models/post");
 
 const createPost = async (req, res) => {
   try {
-    const { poster, title, content } = req.body;
+    const { title, content, userId } = req.body;
 
-    // if (!(title && content)) {
-    //   throw new Error("All input required");
-    // }
+    if (!(title && content)) {
+      throw new Error("All input required");
+    }
 
     const post = await Post.create({
       title,
       content,
-      poster,
+      poster: userId,
     });
 
     res.json(post);
