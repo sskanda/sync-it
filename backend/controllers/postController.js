@@ -30,7 +30,7 @@ const getPosts = async (req, res) => {
       .sort(sortBy)
       .lean();
 
-    return res.json(posts);
+    return res.json({ data: posts });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
