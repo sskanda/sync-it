@@ -17,8 +17,6 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
-
     const data = await signup(formData);
 
     if (data.error) {

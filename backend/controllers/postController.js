@@ -1,18 +1,25 @@
 const mongoose = require("mongoose");
 const Post = require("../models/post");
+const User = require("../models/User");
 
 const createPost = async (req, res) => {
   try {
-    const { title, content, userId } = req.body;
-
+    let user;
+    const { title, content, userId, username } = req.body;
+    console.log(req.body);
     if (!(title && content)) {
       throw new Error("All input required");
     }
 
+    try {
+      user = await User.findOne({ username: username });
+    } catch (err) {
+      console.log("Not present");
+    }
     const post = await Post.create({
       title,
       content,
-      poster: userId,
+      poster: user._id.toString(),
     });
 
     res.json(post);
@@ -24,7 +31,6 @@ const createPost = async (req, res) => {
 const getPosts = async (req, res) => {
   try {
     let sortBy = "-createdAt";
-
     let posts = await Post.find()
       .populate("poster", "-password")
       .sort(sortBy)

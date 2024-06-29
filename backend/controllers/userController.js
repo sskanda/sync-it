@@ -55,12 +55,9 @@ const getUser = async (req, res) => {
       throw new Error("User does not exist");
     }
 
-    //console.log(user);
     const posts = await Post.find({ poster: user._id })
       .populate("poster")
       .sort("-createdAt");
-
-    console.log("dafaq" + posts);
 
     const data = {
       user,

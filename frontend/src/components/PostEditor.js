@@ -1,10 +1,30 @@
 import { Button, Card, Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
 import HorizontalStack from "./util/HorizontalStack";
 import UserAvatar from "./UserAvatar";
+import { useNavigate } from "react-router-dom";
+import { isLoggedIn } from "../helper/auth";
+import { createPost } from "../api/posts";
 import "./PostEditor.css";
 const PostEditor = () => {
+  const [formData, setFormData] = useState({
+    title: "",
+    content: "",
+    username: "",
+  });
+
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    formData.username = isLoggedIn().username; //temp fix for jwt
+    const data = await createPost(formData, isLoggedIn());
+    navigate("/");
+  };
   return (
     <Card className="post_editor_card">
       <Stack spacing={1}>
@@ -15,13 +35,14 @@ const PostEditor = () => {
           </Typography>
         </HorizontalStack>
 
-        <Box component="form">
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
             fullWidth
             label="Title"
             required
             name="title"
             margin="normal"
+            onChange={handleChange}
           />
           <TextField
             fullWidth
@@ -30,6 +51,7 @@ const PostEditor = () => {
             rows={10}
             name="content"
             margin="normal"
+            onChange={handleChange}
           />
 
           <Button

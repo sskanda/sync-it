@@ -20,7 +20,6 @@ const PostBrowser = () => {
       let data;
 
       data = await getPosts();
-      console.log(data);
 
       if (!data.error) setPosts([...posts, ...data.data]);
     } catch (err) {
