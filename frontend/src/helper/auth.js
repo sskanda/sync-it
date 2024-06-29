@@ -6,12 +6,12 @@ const isLoggedIn = () => {
 
 const loginUser = (user) => {
   localStorage.setItem("user", JSON.stringify(user));
-  initiateSocketConnection();
+  //initiateSocketConnection();
 };
 
 const logoutUser = () => {
   localStorage.removeItem("user");
-  initiateSocketConnection();
+  //initiateSocketConnection();
 };
 
 export { loginUser, isLoggedIn, logoutUser };

@@ -1,9 +1,33 @@
 import { Button, Container, Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../api/users";
+import { loginUser } from "../helper/auth";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = await login(formData);
+    if (data.error) {
+      console.log(data.error);
+    } else {
+      loginUser(data);
+      navigate("/");
+    }
+  };
   return (
     <Container maxWidth={"xs"} sx={{ mt: 6 }}>
       <Stack alignItems="center">
@@ -18,7 +42,7 @@ const LoginPage = () => {
         <Typography color="text.secondary">
           Don't have an account yet? <Link to="/signup">Sign Up</Link>
         </Typography>
-        <Box component="form">
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
             label="Email Address"
             fullWidth
@@ -28,6 +52,7 @@ const LoginPage = () => {
             required
             id="email"
             name="email"
+            onChange={handleChange}
           />
           <TextField
             label="Password"
@@ -37,6 +62,7 @@ const LoginPage = () => {
             id="password  "
             name="password"
             type="password"
+            onChange={handleChange}
           />
 
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
