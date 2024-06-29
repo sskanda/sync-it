@@ -5,6 +5,7 @@ import "./PostBrowser.css";
 import Loading from "./Loading";
 import PostCard from "./PostCard";
 import { getPosts } from "../api/posts";
+import { isLoggedIn } from "../helper/auth";
 
 const PostBrowser = () => {
   // const posts = [
@@ -12,14 +13,19 @@ const PostBrowser = () => {
   //   { poster: "user2", title: "Title2", content: "content2" },
   //   { poster: "user3", title: "Title3", content: "content3" },
   // ];
+
   const [posts, setPosts] = useState([]);
   const fetchPosts = async () => {
-    let response, data;
+    try {
+      let data;
 
-    data = await getPosts();
-    console.log(data);
+      data = await getPosts();
+      console.log(data);
 
-    setPosts([...posts, ...data.data]);
+      if (!data.error) setPosts([...posts, ...data.data]);
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     fetchPosts();

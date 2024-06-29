@@ -2,8 +2,36 @@ import { Button, Container, Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { signup } from "../api/users";
+import { loginUser } from "../helper/auth";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log(formData);
+
+    const data = await signup(formData);
+
+    if (data.error) {
+    } else {
+      loginUser(data);
+      navigate("/");
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <Container maxWidth={"xs"} sx={{ mt: { xs: 2, md: 6 } }}>
       <Stack alignItems="center">
@@ -18,7 +46,7 @@ const SignupPage = () => {
         <Typography color="text.secondary">
           Already have an account? <Link to="/login">Login</Link>
         </Typography>
-        <Box component="form">
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
             label="Username"
             fullWidth
@@ -27,6 +55,7 @@ const SignupPage = () => {
             required
             id="username"
             name="username"
+            onChange={handleChange}
           />
           <TextField
             label="Email Address"
@@ -36,6 +65,7 @@ const SignupPage = () => {
             required
             id="email"
             name="email"
+            onChange={handleChange}
           />
           <TextField
             label="Password"
@@ -46,6 +76,7 @@ const SignupPage = () => {
             id="password"
             name="password"
             type="password"
+            onChange={handleChange}
           />
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
             Sign Up
