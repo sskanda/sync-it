@@ -13,7 +13,6 @@ const PostBrowser = () => {
   //   { poster: "user2", title: "Title2", content: "content2" },
   //   { poster: "user3", title: "Title3", content: "content3" },
   // ];
-  console.log(isLoggedIn());
   const [posts, setPosts] = useState([]);
   const fetchPosts = async () => {
     try {

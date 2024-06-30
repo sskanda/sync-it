@@ -6,7 +6,6 @@ const createPost = async (req, res) => {
   try {
     let user;
     const { title, content, userId, username } = req.body;
-    console.log(req.body);
     if (!(title && content)) {
       throw new Error("All input required");
     }

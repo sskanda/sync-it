@@ -23,4 +23,15 @@ const createPost = async (post, user) => {
     console.log(err);
   }
 };
-export { getPosts, createPost };
+
+const getPost = async (postId) => {
+  try {
+    const BASE_URL = "http://localhost:5000";
+    const res = await fetch(BASE_URL + "/api/posts/" + postId);
+    return await res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { getPosts, createPost, getPost };
