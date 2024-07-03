@@ -32,6 +32,39 @@ const createComment = async (req, res) => {
   }
 };
 
+const getPostComments = async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    const comments = await Comment.find({ post: postId })
+      .populate("commenter", "-password")
+      .sort("-createdAt");
+
+    let commentParents = {};
+    let rootComments = [];
+
+    for (let i = 0; i < comments.length; i++) {
+      let comment = comments[i];
+      commentParents[comment._id] = comment;
+    }
+
+    for (let i = 0; i < comments.length; i++) {
+      const comment = comments[i];
+      if (comment.parent) {
+        let commentParent = commentParents[comment.parent];
+        commentParent.children = [...commentParent.children, comment];
+      } else {
+        rootComments = [...rootComments, comment];
+      }
+    }
+
+    return res.json(rootComments);
+  } catch (err) {
+    return res.status(400).json(err.message);
+  }
+};
+
 module.exports = {
   createComment,
+  getPostComments,
 };
