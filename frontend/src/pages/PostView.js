@@ -23,7 +23,6 @@ const PostView = () => {
 
   const fetchPost = async () => {
     const data = await getPost(params.id);
-    console.log(data);
     setPost(data);
   };
 

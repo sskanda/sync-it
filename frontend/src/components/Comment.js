@@ -6,28 +6,32 @@ import { AiFillEdit, AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
 import Markdown from "./Markdown";
 import Moment from "react-moment";
 import { grey, red } from "@mui/material/colors";
+import ContentDetails from "./ContentDetails";
 const Comment = (props) => {
   const theme = useTheme();
-  const commentData = props.comment.content;
+  const commentData = props.comment;
+  const [comment, setComment] = useState(commentData);
+
   let style = {
     backgroundColor: theme.palette.grey[100],
     borderRadius: 1.5,
     mb: theme.spacing(2),
-    padding: theme.spacing(0),
+    padding: "1rem",
     mt: 2,
   };
   return (
     <Box sx={style}>
-      <Box>
+      <div>
         <Typography variant="h6">
-          <Link underline="hover">titlex</Link>
+          <ContentDetails
+            username={comment.commenter.username}
+            createdAt={comment.createdAt}
+            edited={comment.edited}
+          />
         </Typography>
-        <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-          <Moment fromNow>CreatedAt</Moment>{" "}
-        </Typography>
-      </Box>
+      </div>
       <Box sx={{ mt: 1 }} overflow="hidden">
-        <Markdown content="content" />
+        <Markdown content={comment.content} />
       </Box>
     </Box>
   );

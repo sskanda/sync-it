@@ -1,3 +1,5 @@
+const BASE_URL = "http://localhost:5000";
+
 const getPosts = async () => {
   try {
     const res = await fetch("http://localhost:5000/api/posts");
@@ -9,7 +11,6 @@ const getPosts = async () => {
 
 const createPost = async (post, user) => {
   try {
-    const BASE_URL = "http://localhost:5000";
     const res = await fetch(BASE_URL + "/api/posts", {
       method: "POST",
       headers: {
@@ -26,7 +27,6 @@ const createPost = async (post, user) => {
 
 const getPost = async (postId) => {
   try {
-    const BASE_URL = "http://localhost:5000";
     const res = await fetch(BASE_URL + "/api/posts/" + postId);
     return await res.json();
   } catch (err) {
@@ -34,4 +34,14 @@ const getPost = async (postId) => {
   }
 };
 
-export { getPosts, createPost, getPost };
+const getComments = async (params) => {
+  try {
+    const { id } = params;
+    const res = await fetch(BASE_URL + "/api/comments/post/" + id);
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { getPosts, createPost, getPost, getComments };
