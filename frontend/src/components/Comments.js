@@ -22,7 +22,7 @@ const Comments = () => {
     <div style={{ marginTop: "2rem" }}>
       <CommentEditor label="What are your thoughts on this post?"></CommentEditor>
 
-      {comments != null && comments != undefined ? (
+      {comments !== null ? (
         comments.map((comment, i) => <Comment key={i} comment={comment} />)
       ) : (
         <Loading></Loading>

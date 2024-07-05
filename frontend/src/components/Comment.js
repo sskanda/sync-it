@@ -7,6 +7,7 @@ import Markdown from "./Markdown";
 import Moment from "react-moment";
 import { grey, red } from "@mui/material/colors";
 import ContentDetails from "./ContentDetails";
+import Loading from "./Loading";
 const Comment = (props) => {
   const theme = useTheme();
   const commentData = props.comment;
@@ -32,6 +33,13 @@ const Comment = (props) => {
       </div>
       <Box sx={{ mt: 1 }} overflow="hidden">
         <Markdown content={comment.content} />
+        {comment.children !== null ? (
+          comment.children.map((reply, i) => (
+            <Comment key={i} comment={reply} />
+          ))
+        ) : (
+          <Loading></Loading>
+        )}
       </Box>
     </Box>
   );
