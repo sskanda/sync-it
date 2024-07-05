@@ -23,7 +23,9 @@ const Comments = () => {
       <CommentEditor label="What are your thoughts on this post?"></CommentEditor>
 
       {comments !== null ? (
-        comments.map((comment, i) => <Comment key={i} comment={comment} />)
+        comments.map((comment, i) => (
+          <Comment key={i} comment={comment} depth={0} />
+        ))
       ) : (
         <Loading></Loading>
       )}
