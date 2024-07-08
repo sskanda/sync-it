@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Card, Stack, TextField, Typography } from "@mui/material";
 import HorizontalStack from "./util/HorizontalStack";
 import { Box } from "@mui/system";
-const CommentEditor = ({ label }) => {
+import { createComment } from "../api/posts";
+import { isLoggedIn, logoutUser } from "../helper/auth";
+import { useParams } from "react-router-dom";
+const CommentEditor = ({ label, comment, addComments }) => {
+  const [formData, setFormData] = useState({
+    content: "",
+  });
+  const params = useParams();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    formData.username = isLoggedIn().username; //temp fix for jwt
+    const body = {
+      ...formData,
+      parentId: comment && comment._id,
+    };
+
+    const data = await createComment(body, params, isLoggedIn());
+
+    addComments(data);
+    formData.content = "";
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   return (
     <Card style={{ padding: "15px" }}>
       <Stack spacing={2}>
@@ -10,7 +34,7 @@ const CommentEditor = ({ label }) => {
           <Typography variant="h5">Comment</Typography>
         </HorizontalStack>
 
-        <Box component="form">
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
             multiline
             fullWidth
@@ -21,6 +45,8 @@ const CommentEditor = ({ label }) => {
             sx={{
               backgroundColor: "white",
             }}
+            onChange={handleChange}
+            value={formData.content}
           />
 
           <Button

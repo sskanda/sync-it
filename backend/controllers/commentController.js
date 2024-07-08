@@ -1,11 +1,18 @@
 const Comment = require("../models/Comment");
 const mongoose = require("mongoose");
 const Post = require("../models/post");
+const User = require("../models/User");
 
 const createComment = async (req, res) => {
   try {
     const postId = req.params.id;
-    const { content, parentId, userId } = req.body;
+    const { content, parentId, userId, username } = req.body;
+
+    try {
+      user = await User.findOne({ username: username });
+    } catch (err) {
+      console.log("Not present");
+    }
 
     const post = await Post.findById(postId);
 
@@ -17,7 +24,7 @@ const createComment = async (req, res) => {
       content,
       parent: parentId,
       post: postId,
-      commenter: userId,
+      commenter: user._id.toString(),
     });
 
     //post.commentCount += 1;

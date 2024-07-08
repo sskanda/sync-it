@@ -7,22 +7,29 @@ import Loading from "./Loading";
 
 const Comments = () => {
   const [comments, setComments] = useState(null);
+  const [rerender, setRerender] = useState(false);
   const params = useParams();
 
   const fetchComments = async () => {
     const data = await getComments(params);
-
     setComments(data);
+  };
+
+  const addComments = (comment) => {
+    setComments(comment);
   };
 
   useEffect(() => {
     fetchComments();
-  }, []);
+  }, [comments]);
   return (
     <div style={{ marginTop: "2rem" }}>
-      <CommentEditor label="What are your thoughts on this post?"></CommentEditor>
+      <CommentEditor
+        label="What are your thoughts on this post?"
+        addComments={addComments}
+      ></CommentEditor>
 
-      {comments !== null ? (
+      {comments !== null && comments.length > 0 ? (
         comments.map((comment, i) => (
           <Comment key={i} comment={comment} depth={0} />
         ))

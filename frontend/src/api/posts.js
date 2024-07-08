@@ -44,4 +44,21 @@ const getComments = async (params) => {
   }
 };
 
-export { getPosts, createPost, getPost, getComments };
+const createComment = async (comment, params, user) => {
+  try {
+    const { id } = params;
+    const res = await fetch(BASE_URL + "/api/comments/" + id, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(comment),
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { getPosts, createPost, getPost, getComments, createComment };
