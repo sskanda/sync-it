@@ -31,7 +31,12 @@ const Comments = () => {
 
       {comments !== null && comments.length > 0 ? (
         comments.map((comment, i) => (
-          <Comment key={i} comment={comment} depth={0} />
+          <Comment
+            key={i}
+            comment={comment}
+            depth={0}
+            addComments={addComments}
+          />
         ))
       ) : (
         <Loading></Loading>

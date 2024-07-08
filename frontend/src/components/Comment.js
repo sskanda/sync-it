@@ -1,18 +1,18 @@
 import { Button, IconButton, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Markdown from "./Markdown";
 import ContentDetails from "./ContentDetails";
 import Loading from "./Loading";
 import { BsReply, BsReplyFill } from "react-icons/bs";
 import { RiCloseLargeFill } from "react-icons/ri";
-import PostEditor from "./PostEditor";
+import CommentEditor from "./CommentEditor";
 
 const Comment = (props) => {
   const theme = useTheme();
   const commentData = props.comment;
-  const { depth } = props;
+  const { depth, addComments } = props;
   const [comment, setComment] = useState(commentData);
   const [replying, setReplying] = useState(false);
 
@@ -26,6 +26,8 @@ const Comment = (props) => {
   const handleSetReplying = () => {
     setReplying(!replying);
   };
+
+  useEffect(() => {}, [comment]);
 
   return (
     <Box sx={style}>
@@ -60,13 +62,22 @@ const Comment = (props) => {
         <Markdown content={comment.content} />
         {replying && (
           <Box sx={{ mt: 2 }}>
-            <PostEditor>ReplyTest</PostEditor>
+            <CommentEditor
+              comment={comment}
+              label="What are your thoughts on this comment?"
+              addComments={addComments}
+            ></CommentEditor>
           </Box>
         )}
         {comment.children && (
           <Box sx={{ pt: theme.spacing(2) }}>
             {comment.children.map((reply, i) => (
-              <Comment key={reply._id} comment={reply} depth={depth + 1} />
+              <Comment
+                key={reply._id}
+                comment={reply}
+                depth={depth + 1}
+                addComments={addComments}
+              />
             ))}
             <IconButton variant="text" size="small" />
           </Box>

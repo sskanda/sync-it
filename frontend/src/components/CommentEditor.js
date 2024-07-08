@@ -5,7 +5,7 @@ import { Box } from "@mui/system";
 import { createComment } from "../api/posts";
 import { isLoggedIn, logoutUser } from "../helper/auth";
 import { useParams } from "react-router-dom";
-const CommentEditor = ({ label, comment, addComments }) => {
+const CommentEditor = ({ label, comment, addComments, addCommentsz }) => {
   const [formData, setFormData] = useState({
     content: "",
   });
@@ -17,7 +17,6 @@ const CommentEditor = ({ label, comment, addComments }) => {
       ...formData,
       parentId: comment && comment._id,
     };
-
     const data = await createComment(body, params, isLoggedIn());
 
     addComments(data);
@@ -31,7 +30,9 @@ const CommentEditor = ({ label, comment, addComments }) => {
     <Card style={{ padding: "15px" }}>
       <Stack spacing={2}>
         <HorizontalStack justifyContent="space-between">
-          <Typography variant="h5">Comment</Typography>
+          <Typography variant="h5">
+            {comment ? <>Reply</> : <>Comment</>}
+          </Typography>
         </HorizontalStack>
 
         <Box component="form" onSubmit={handleSubmit}>
