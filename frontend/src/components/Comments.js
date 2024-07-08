@@ -6,30 +6,37 @@ import { useParams } from "react-router-dom";
 import Loading from "./Loading";
 
 const Comments = () => {
-  const [comments, setComments] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [rerender, setRerender] = useState(false);
   const params = useParams();
 
   const fetchComments = async () => {
+    setIsLoading(true); // Set loading to true before fetching
     const data = await getComments(params);
     setComments(data);
+    setIsLoading(false); // Set loading to false after fetching
   };
 
   const addComments = (comment) => {
     setComments(comment);
+    setRerender(!rerender); // Toggle rerender state to trigger useEffect
   };
 
   useEffect(() => {
     fetchComments();
-  }, [comments]);
+  }, [rerender]);
+
   return (
     <div style={{ marginTop: "2rem" }}>
       <CommentEditor
         label="What are your thoughts on this post?"
         addComments={addComments}
-      ></CommentEditor>
+      />
 
-      {comments !== null && comments.length > 0 ? (
+      {isLoading ? (
+        <Loading />
+      ) : comments.length > 0 ? (
         comments.map((comment, i) => (
           <Comment
             key={i}
@@ -39,7 +46,7 @@ const Comments = () => {
           />
         ))
       ) : (
-        <Loading></Loading>
+        <p>No comments yet. Be the first to comment!</p>
       )}
     </div>
   );
