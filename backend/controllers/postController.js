@@ -29,11 +29,18 @@ const createPost = async (req, res) => {
 
 const getPosts = async (req, res) => {
   try {
+    let { search } = req.query;
     let sortBy = "-createdAt";
     let posts = await Post.find()
       .populate("poster", "-password")
       .sort(sortBy)
       .lean();
+
+    if (search) {
+      posts = posts.filter((post) =>
+        post.title.toLowerCase().includes(search.toLowerCase())
+      );
+    }
 
     return res.json({ data: posts });
   } catch (err) {
