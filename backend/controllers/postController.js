@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Post = require("../models/post");
 const User = require("../models/User");
+const PostLike = require("../models/PostLike");
 
 const createPost = async (req, res) => {
   try {
@@ -71,8 +72,88 @@ const getPost = async (req, res) => {
   }
 };
 
+const likePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const { username } = req.body;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      throw new Error("Post does not exist");
+    }
+    let user, userId;
+    try {
+      user = await User.findOne({ username: username });
+    } catch (err) {
+      console.log("Not present");
+    }
+
+    userId = user._id.toString();
+
+    const existingPostLike = await PostLike.findOne({ postId, userId });
+
+    if (existingPostLike) {
+      throw new Error("Post is already liked");
+    }
+    console.log("dada");
+    await PostLike.create({
+      postId,
+      userId,
+    });
+
+    post.likeCount = (await PostLike.find({ postId })).length;
+
+    await post.save();
+
+    return res.json({ success: true });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+
+const unlikePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const { username } = req.body;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      throw new Error("Post does not exist");
+    }
+
+    let user, userId;
+    try {
+      user = await User.findOne({ username: username });
+    } catch (err) {
+      console.log("Not present");
+    }
+
+    userId = user._id.toString();
+
+    const existingPostLike = await PostLike.findOne({ postId, userId });
+
+    if (!existingPostLike) {
+      throw new Error("Post is already not liked");
+    }
+
+    await existingPostLike.deleteOne();
+
+    post.likeCount = (await PostLike.find({ postId })).length;
+
+    await post.save();
+
+    return res.json({ success: true });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   createPost,
   getPosts,
   getPost,
+  likePost,
+  unlikePost,
 };
