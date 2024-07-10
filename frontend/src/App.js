@@ -5,6 +5,7 @@ import CreatePostPage from "./pages/CreatePostPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import PostView from "./pages/PostView";
+import SearchView from "./pages/SearchView";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/posts/create" element={<CreatePostPage />} />
         <Route path="/posts/:id" element={<PostView />} />
+        <Route path="/search" element={<SearchView />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
       </Routes>

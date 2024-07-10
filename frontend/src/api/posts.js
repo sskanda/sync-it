@@ -1,8 +1,10 @@
 const BASE_URL = "http://localhost:5000";
 
-const getPosts = async () => {
+const getPosts = async (query) => {
   try {
-    const res = await fetch("http://localhost:5000/api/posts");
+    const res = await fetch(
+      BASE_URL + "/api/posts?" + new URLSearchParams(query)
+    );
     return await res.json();
   } catch (err) {
     console.log(err);

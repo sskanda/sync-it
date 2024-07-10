@@ -10,7 +10,7 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    //navigate("/search?" + new URLSearchParams({ search }));
+    navigate("/search?" + new URLSearchParams({ search }));
   };
   const handleLogout = async (e) => {
     logoutUser();
