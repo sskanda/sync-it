@@ -48,7 +48,7 @@ const PostCard = (props) => {
                 color="text.secondary"
                 sx={{ fontWeight: "bold" }}
               >
-                67
+                {post.commentCount}
               </Typography>
             </HorizontalStack>
           </HorizontalStack>

@@ -27,9 +27,9 @@ const createComment = async (req, res) => {
       commenter: user._id.toString(),
     });
 
-    //post.commentCount += 1;
+    post.commentCount += 1;
 
-    //await post.save();
+    await post.save();
 
     await Comment.populate(comment, { path: "commenter", select: "-password" });
 

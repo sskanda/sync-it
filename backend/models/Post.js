@@ -17,6 +17,10 @@ const PostSchema = new mongoose.Schema(
       required: true,
       maxLength: [8000, "Must be no more than 8000 characters"],
     },
+    commentCount: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
