@@ -63,4 +63,44 @@ const createComment = async (comment, params, user) => {
   }
 };
 
-export { getPosts, createPost, getPost, getComments, createComment };
+const likePost = async (postId, user) => {
+  try {
+    const res = await fetch(BASE_URL + "/api/posts/like/" + postId, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const unlikePost = async (postId, user) => {
+  try {
+    const res = await fetch(BASE_URL + "/api/posts/like/" + postId, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export {
+  getPosts,
+  createPost,
+  getPost,
+  getComments,
+  createComment,
+  likePost,
+  unlikePost,
+};

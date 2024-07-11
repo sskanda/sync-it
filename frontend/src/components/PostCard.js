@@ -7,10 +7,26 @@ import PostContentBox from "./PostContentBox";
 import ContentDetails from "./ContentDetails";
 import { AiFillMessage } from "react-icons/ai";
 import HorizontalStack from "./util/HorizontalStack";
+import { isLoggedIn, logoutUser } from "../helper/auth";
+import { likePost, unlikePost } from "../api/posts";
+
 const PostCard = (props) => {
   let postData = props.post;
 
   const [post, setPost] = useState(postData);
+  const [likeCount, setLikeCount] = useState(post.likeCount);
+  const handleLike = async (liked) => {
+    let user = {
+      username: isLoggedIn().username,
+    };
+    if (liked) {
+      setLikeCount(likeCount + 1);
+      await likePost(post._id, user);
+    } else {
+      setLikeCount(likeCount - 1);
+      await unlikePost(post._id, user);
+    }
+  };
   return (
     <Card
       style={{ marginTop: "2rem" }}
@@ -26,7 +42,7 @@ const PostCard = (props) => {
           width: "50px",
         }}
       >
-        <LikeBox />
+        <LikeBox likeCount={likeCount} liked={post.liked} onLike={handleLike} />
       </Stack>
       <PostContentBox post={post}>
         <div style={{ padding: "1rem" }}>

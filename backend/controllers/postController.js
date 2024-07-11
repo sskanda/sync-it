@@ -31,6 +31,8 @@ const createPost = async (req, res) => {
 const getPosts = async (req, res) => {
   try {
     let { search } = req.query;
+    let username;
+    if (req.body != null) username = req.body;
     let sortBy = "-createdAt";
     let posts = await Post.find()
       .populate("poster", "-password")
@@ -41,6 +43,18 @@ const getPosts = async (req, res) => {
       posts = posts.filter((post) =>
         post.title.toLowerCase().includes(search.toLowerCase())
       );
+    }
+    let user, userId;
+    try {
+      user = await User.findOne({ username: username });
+    } catch (err) {
+      console.log("Not present");
+    }
+
+    if (user) userId = user._id.toString();
+
+    if (userId) {
+      await setLiked(posts, userId);
     }
 
     return res.json({ data: posts });
@@ -88,15 +102,14 @@ const likePost = async (req, res) => {
     } catch (err) {
       console.log("Not present");
     }
-
-    userId = user._id.toString();
+    if (user) userId = user._id.toString();
 
     const existingPostLike = await PostLike.findOne({ postId, userId });
 
     if (existingPostLike) {
       throw new Error("Post is already liked");
     }
-    console.log("dada");
+
     await PostLike.create({
       postId,
       userId,
@@ -116,7 +129,6 @@ const unlikePost = async (req, res) => {
   try {
     const postId = req.params.id;
     const { username } = req.body;
-
     const post = await Post.findById(postId);
 
     if (!post) {
@@ -130,7 +142,7 @@ const unlikePost = async (req, res) => {
       console.log("Not present");
     }
 
-    userId = user._id.toString();
+    if (user) userId = user._id.toString();
 
     const existingPostLike = await PostLike.findOne({ postId, userId });
 
@@ -148,6 +160,22 @@ const unlikePost = async (req, res) => {
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
+};
+
+const setLiked = async (posts, userId) => {
+  let searchCondition = {};
+  if (userId) searchCondition = { userId };
+
+  const userPostLikes = await PostLike.find(searchCondition); //userId needed
+
+  posts.forEach((post) => {
+    userPostLikes.forEach((userPostLike) => {
+      if (userPostLike.postId.equals(post._id)) {
+        post.liked = true;
+        return;
+      }
+    });
+  });
 };
 
 module.exports = {
