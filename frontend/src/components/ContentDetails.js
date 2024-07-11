@@ -9,7 +9,7 @@ import Moment from "react-moment";
 const ContentDetails = ({ username, createdAt, edited, preview }) => {
   return (
     <HorizontalStack sx={{}}>
-      <UserAvatar width={30} height={30} />
+      <UserAvatar width={30} height={30} username={username} />
       <Typography
         style={{ display: "flex", gap: "1rem" }}
         variant="subtitle2"

@@ -3,8 +3,6 @@ import { FormControl, MenuItem, Select, Typography } from "@mui/material";
 import HorizontalStack from "./util/HorizontalStack";
 
 const SortPosts = ({ onSortBy, sortBy, sorts }) => {
-  console.log("uess");
-  console.log(sorts);
   return (
     <HorizontalStack spacing={1}>
       <Typography
