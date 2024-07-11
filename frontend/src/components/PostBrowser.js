@@ -22,7 +22,7 @@ const PostBrowser = (props) => {
     setLoading(true);
     try {
       let data,
-        query = {};
+        query = { sortBy };
 
       if (props.contentType === "posts" && searchExists) {
         query.search = search.get("search");
@@ -45,30 +45,24 @@ const PostBrowser = (props) => {
     const newSortName = e.target.value;
     let newSortBy;
 
-    Object.keys(sorts).forEach((sortName) => {
-      if (sorts[sortName] === newSortName) newSortBy = sortName;
+    Object.keys(sortTypes).forEach((sortName) => {
+      if (sortTypes[sortName] === newSortName) newSortBy = sortName;
     });
 
     setPosts([]);
     setSortBy(newSortBy);
   };
 
-  const contentTypeSorts = {
-    posts: {
-      "-createdAt": "Latest",
-      "-likeCount": "Likes",
-      "-commentCount": "Comments",
-      createdAt: "Earliest",
-    },
+  const sortTypes = {
+    "-createdAt": "Latest",
+    "-likeCount": "Likes",
+    "-commentCount": "Comments",
+    createdAt: "Earliest",
   };
-
-  const sorts = contentTypeSorts["posts"];
-  console.log("sorts");
-  console.log(sorts);
 
   useEffect(() => {
     fetchPosts();
-  }, [search]);
+  }, [sortBy, search]);
 
   return (
     <>
@@ -77,7 +71,7 @@ const PostBrowser = (props) => {
         <SortPosts
           onSortBy={handleSortBy}
           sortBy={sortBy}
-          sorts={sorts}
+          sorts={sortTypes}
         ></SortPosts>
       </Card>
 

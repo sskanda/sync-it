@@ -19,7 +19,12 @@ const SortPosts = ({ onSortBy, sortBy, sorts }) => {
       >
         Sort by:
       </Typography>
-      <Select size="small" value={sorts[sortBy]}>
+      <Select
+        size="small"
+        value={sorts[sortBy]}
+        sx={{ minWidth: 150 }}
+        onChange={onSortBy}
+      >
         {Object.keys(sorts).map((sortName, i) => (
           <MenuItem value={sorts[sortName]} key={i}>
             {sorts[sortName]}

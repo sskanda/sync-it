@@ -30,10 +30,11 @@ const createPost = async (req, res) => {
 
 const getPosts = async (req, res) => {
   try {
-    let { search } = req.query;
+    let { search, sortBy } = req.query;
     let username;
     if (req.body != null) username = req.body;
-    let sortBy = "-createdAt";
+
+    if (!sortBy) sortBy = "-createdAt";
     let posts = await Post.find()
       .populate("poster", "-password")
       .sort(sortBy)
