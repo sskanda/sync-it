@@ -6,12 +6,14 @@ import Loading from "./Loading";
 import PostCard from "./PostCard";
 import { getPosts } from "../api/posts";
 import { useSearchParams } from "react-router-dom";
+import SortPosts from "./SortPosts";
 
 const PostBrowser = (props) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
   const [search] = useSearchParams();
+  const [sortBy, setSortBy] = useState("-createdAt");
 
   const searchExists =
     search && search.get("search") && search.get("search").length > 0;
@@ -21,7 +23,8 @@ const PostBrowser = (props) => {
     try {
       let data,
         query = {};
-      if (props.contentType === "SearchPosts" && searchExists) {
+
+      if (props.contentType === "posts" && searchExists) {
         query.search = search.get("search");
       }
 
@@ -38,6 +41,31 @@ const PostBrowser = (props) => {
     }
   };
 
+  const handleSortBy = (e) => {
+    const newSortName = e.target.value;
+    let newSortBy;
+
+    Object.keys(sorts).forEach((sortName) => {
+      if (sorts[sortName] === newSortName) newSortBy = sortName;
+    });
+
+    setPosts([]);
+    setSortBy(newSortBy);
+  };
+
+  const contentTypeSorts = {
+    posts: {
+      "-createdAt": "Latest",
+      "-likeCount": "Likes",
+      "-commentCount": "Comments",
+      createdAt: "Earliest",
+    },
+  };
+
+  const sorts = contentTypeSorts["posts"];
+  console.log("sorts");
+  console.log(sorts);
+
   useEffect(() => {
     fetchPosts();
   }, [search]);
@@ -46,6 +74,11 @@ const PostBrowser = (props) => {
     <>
       <Card className="card">
         <CreatePost />
+        <SortPosts
+          onSortBy={handleSortBy}
+          sortBy={sortBy}
+          sorts={sorts}
+        ></SortPosts>
       </Card>
 
       {searchExists && (

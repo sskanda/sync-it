@@ -12,7 +12,7 @@ const SearchView = () => {
       <Navbar></Navbar>
       <GoBack></GoBack>
       <GridLayout
-        left={<PostBrowser createPost contentType="SearchPosts"></PostBrowser>}
+        left={<PostBrowser createPost contentType="posts"></PostBrowser>}
         right={<SideBar></SideBar>}
       />
     </Container>
