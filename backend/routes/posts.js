@@ -9,5 +9,6 @@ router.get("/:id", postController.getPost);
 
 router.post("/like/:id", postController.likePost);
 router.delete("/like/:id", postController.unlikePost);
+router.get("/liked/:id", postController.getUserLikedPosts);
 
 module.exports = router;

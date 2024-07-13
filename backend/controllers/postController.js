@@ -91,6 +91,33 @@ const getPost = async (req, res) => {
   }
 };
 
+const getUserLikedPosts = async (req, res) => {
+  try {
+    const likerId = req.params.id;
+    const { userId } = req.body;
+
+    let sortBy = "-createdAt";
+
+    let posts = await PostLike.find({ userId: likerId })
+      .sort(sortBy)
+      .populate({ path: "postId", populate: { path: "poster" } })
+      .lean();
+    console.log(posts);
+
+    const count = posts.length;
+
+    let responsePosts = [];
+    posts.forEach((post) => {
+      responsePosts.push(post.postId);
+    });
+
+    return res.json({ data: responsePosts, count });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ error: err.message });
+  }
+};
+
 const likePost = async (req, res) => {
   try {
     const postId = req.params.id;
@@ -189,4 +216,5 @@ module.exports = {
   getPost,
   likePost,
   unlikePost,
+  getUserLikedPosts,
 };
