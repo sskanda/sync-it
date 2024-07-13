@@ -27,7 +27,7 @@ const PostBrowser = (props) => {
       if (props.contentType === "posts" && searchExists) {
         query.search = search.get("search");
       }
-
+      if (props.profileUser) query.author = props.profileUser.username;
       data = await getPosts(query);
 
       if (!data.error) {
@@ -67,7 +67,7 @@ const PostBrowser = (props) => {
   return (
     <>
       <Card className="card">
-        <CreatePost />
+        {props.createPost && <CreatePost />}
         <SortPosts
           onSortBy={handleSortBy}
           sortBy={sortBy}

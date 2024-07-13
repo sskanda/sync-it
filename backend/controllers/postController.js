@@ -30,7 +30,7 @@ const createPost = async (req, res) => {
 
 const getPosts = async (req, res) => {
   try {
-    let { search, sortBy } = req.query;
+    let { search, sortBy, author } = req.query;
     let username;
     if (req.body != null) username = req.body;
 
@@ -39,6 +39,10 @@ const getPosts = async (req, res) => {
       .populate("poster", "-password")
       .sort(sortBy)
       .lean();
+
+    if (author) {
+      posts = posts.filter((post) => post.poster.username == author);
+    }
 
     if (search) {
       posts = posts.filter((post) =>

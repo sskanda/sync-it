@@ -8,13 +8,14 @@ import UserAvatar from "./UserAvatar";
 
 const Profile = (props) => {
   const [user, setUser] = useState(null);
-  const [profile, setProfile] = useState(null);
   const currentUser = isLoggedIn();
+
   useEffect(() => {
     if (props.profile) {
       setUser(props.profile.user);
     }
   }, [props.profile]);
+
   return (
     <Card>
       {user ? (

@@ -10,7 +10,7 @@ const Home = () => {
     <Container>
       <Navbar></Navbar>
       <GridLayout
-        left={<PostBrowser></PostBrowser>}
+        left={<PostBrowser createPost></PostBrowser>}
         right={<SideBar></SideBar>}
       />
     </Container>
