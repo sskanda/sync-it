@@ -95,6 +95,21 @@ const unlikePost = async (postId, user) => {
   }
 };
 
+const getUserLikedPosts = async (likerId, token, query) => {
+  try {
+    const res = await fetch(
+      BASE_URL +
+        "/api/posts/liked/" +
+        likerId +
+        "?" +
+        new URLSearchParams(query)
+    );
+    return await res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export {
   getPosts,
   createPost,
@@ -103,4 +118,5 @@ export {
   createComment,
   likePost,
   unlikePost,
+  getUserLikedPosts,
 };

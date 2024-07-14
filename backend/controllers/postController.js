@@ -94,9 +94,10 @@ const getPost = async (req, res) => {
 const getUserLikedPosts = async (req, res) => {
   try {
     const likerId = req.params.id;
+    let { search, sortBy, author } = req.query;
     const { userId } = req.body;
 
-    let sortBy = "-createdAt";
+    if (!sortBy) sortBy = "-createdAt";
 
     let posts = await PostLike.find({ userId: likerId })
       .sort(sortBy)
@@ -113,7 +114,6 @@ const getUserLikedPosts = async (req, res) => {
 
     return res.json({ data: responsePosts, count });
   } catch (err) {
-    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };

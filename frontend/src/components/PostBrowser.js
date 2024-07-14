@@ -4,7 +4,7 @@ import CreatePost from "./CreatePost";
 import "./PostBrowser.css";
 import Loading from "./Loading";
 import PostCard from "./PostCard";
-import { getPosts } from "../api/posts";
+import { getPosts, getUserLikedPosts } from "../api/posts";
 import { useSearchParams } from "react-router-dom";
 import SortPosts from "./SortPosts";
 
@@ -24,11 +24,13 @@ const PostBrowser = (props) => {
       let data,
         query = { sortBy };
 
-      if (props.contentType === "posts" && searchExists) {
-        query.search = search.get("search");
+      if (props.contentType === "posts") {
+        if (props.profileUser) query.author = props.profileUser.username;
+        if (searchExists) query.search = search.get("search");
+        data = await getPosts(query);
+      } else if (props.contentType === "liked") {
+        data = await getUserLikedPosts(props.profileUser._id, query);
       }
-      if (props.profileUser) query.author = props.profileUser.username;
-      data = await getPosts(query);
 
       if (!data.error) {
         setPosts(data.data);
