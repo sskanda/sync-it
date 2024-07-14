@@ -71,7 +71,26 @@ const getPostComments = async (req, res) => {
   }
 };
 
+const getUserComments = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    let { sortBy } = req.query;
+
+    if (!sortBy) sortBy = "-createdAt";
+
+    let comments = await Comment.find({ commenter: userId })
+      .sort(sortBy)
+      .populate("post");
+
+    return res.json(comments);
+  } catch (err) {
+    return res.status(400).json(err.message);
+  }
+};
+
 module.exports = {
   createComment,
   getPostComments,
+  getUserComments,
 };

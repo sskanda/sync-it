@@ -110,6 +110,18 @@ const getUserLikedPosts = async (likerId, token, query) => {
   }
 };
 
+const getUserComments = async (params) => {
+  try {
+    const { id, query } = params;
+    const res = await fetch(
+      BASE_URL + "/api/comments/user/" + id + "?" + new URLSearchParams(query)
+    );
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export {
   getPosts,
   createPost,
@@ -119,4 +131,5 @@ export {
   likePost,
   unlikePost,
   getUserLikedPosts,
+  getUserComments,
 };

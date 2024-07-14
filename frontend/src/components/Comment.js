@@ -8,6 +8,7 @@ import Loading from "./Loading";
 import { BsReply, BsReplyFill } from "react-icons/bs";
 import { RiCloseLargeFill } from "react-icons/ri";
 import CommentEditor from "./CommentEditor";
+import Moment from "react-moment";
 
 const Comment = (props) => {
   const theme = useTheme();
@@ -31,32 +32,45 @@ const Comment = (props) => {
 
   return (
     <Box sx={style}>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h6">
-          <ContentDetails
-            username={comment.commenter.username}
-            createdAt={comment.createdAt}
-            edited={comment.edited}
-          />
-        </Typography>
-        <div
-          style={{
-            display: "flex",
-            cursor: "pointer",
-            color: replying ? "red" : "blue",
-          }}
-          onClick={handleSetReplying}
-        >
-          {!replying ? (
-            <>
-              <BsReplyFill />
-              <> Reply</>
-            </>
-          ) : (
-            <RiCloseLargeFill />
-          )}
+      {props.profile ? (
+        <Box>
+          <Typography variant="h6">
+            <Link underline="hover" to={"/posts/" + comment.post._id}>
+              {comment.post.title}
+            </Link>
+          </Typography>
+          <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+            <Moment fromNow>{comment.createdAt}</Moment>{" "}
+          </Typography>
+        </Box>
+      ) : (
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h6">
+            <ContentDetails
+              username={comment.commenter.username}
+              createdAt={comment.createdAt}
+              edited={comment.edited}
+            />
+          </Typography>
+          <div
+            style={{
+              display: "flex",
+              cursor: "pointer",
+              color: replying ? "red" : "blue",
+            }}
+            onClick={handleSetReplying}
+          >
+            {!replying ? (
+              <>
+                <BsReplyFill />
+                <> Reply</>
+              </>
+            ) : (
+              <RiCloseLargeFill />
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       <Box sx={{ mt: 1 }} overflow="hidden">
         <Markdown content={comment.content} />

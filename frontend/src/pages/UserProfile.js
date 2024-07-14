@@ -9,6 +9,7 @@ import Profile from "../components/Profile";
 import { getUser } from "../api/users";
 import PostBrowser from "../components/PostBrowser";
 import Loading from "../components/Loading";
+import UserComments from "../components/UserComments";
 
 const UserProfile = () => {
   const [tab, setTab] = useState("posts");
@@ -37,6 +38,7 @@ const UserProfile = () => {
           key="liked"
         />
       ),
+      comments: <UserComments profileUser={profile.user} />,
     };
   }
 
