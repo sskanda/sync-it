@@ -28,10 +28,10 @@ const Profile = (props) => {
 
           <HorizontalStack>
             <Typography color="text.secondary">
-              Likes <b>24</b>
+              Likes <b>{props.profile.posts.likeCount}</b>
             </Typography>
             <Typography color="text.secondary">
-              Posts <b>43</b>
+              Posts <b>{props.profile.posts.count}</b>
             </Typography>
           </HorizontalStack>
         </Stack>
