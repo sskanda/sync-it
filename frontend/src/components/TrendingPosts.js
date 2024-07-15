@@ -41,7 +41,7 @@ const TrendingPosts = () => {
       <Card className="head">
         <HorizontalStack>
           <FiTrendingUp />
-          <Typography>Trending Posts</Typography>
+          <Typography>Trending</Typography>
         </HorizontalStack>
       </Card>
       {!loading ? (
