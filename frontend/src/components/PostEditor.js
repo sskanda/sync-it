@@ -14,6 +14,8 @@ const PostEditor = () => {
     username: "",
   });
 
+  const user = isLoggedIn();
+
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,7 +31,7 @@ const PostEditor = () => {
     <Card className="post_editor_card">
       <Stack spacing={1}>
         <HorizontalStack spacing={2}>
-          <UserAvatar width={50} height={50} />
+          <UserAvatar width={50} height={50} username={user.username} />
           <Typography variant="h5">
             What would you like to post today ?
           </Typography>
