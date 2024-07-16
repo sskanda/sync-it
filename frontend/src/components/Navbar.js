@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Stack, TextField, Button } from "@mui/material";
+import { Stack, TextField, Button, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
 import { isLoggedIn, logoutUser } from "../helper/auth";
 import "./Navbar.css";
+import UserAvatar from "./UserAvatar";
 const Navbar = () => {
   const user = isLoggedIn();
+  const username = user && isLoggedIn().username;
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const handleSubmit = (e) => {
@@ -34,14 +36,19 @@ const Navbar = () => {
           />
         </Box>
         {user ? (
-          <Button
-            onClick={handleLogout}
-            variant="text"
-            sx={{ minWidth: 65 }}
-            href="/login"
-          >
-            LOGOUT
-          </Button>
+          <div>
+            <IconButton component={Link} to={"/users/" + username}>
+              <UserAvatar width={30} height={30} username={user.username} />
+            </IconButton>
+            <Button
+              onClick={handleLogout}
+              variant="text"
+              sx={{ minWidth: 65 }}
+              href="/login"
+            >
+              LOGOUT
+            </Button>
+          </div>
         ) : (
           <>
             <Button variant="text" sx={{ minWidth: 80 }} href="/signup">
