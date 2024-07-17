@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
+import { isLoggedIn } from "../helper/auth";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -9,7 +10,11 @@ const CreatePost = () => {
     <Button
       variant="outlined"
       size="medium"
-      onClick={() => navigate("/posts/create")}
+      onClick={
+        isLoggedIn()
+          ? () => navigate("/posts/create")
+          : () => navigate("/login")
+      }
       sx={{
         gap: "0.2rem",
         whiteSpace: "nowrap",
