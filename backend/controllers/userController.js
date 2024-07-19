@@ -84,9 +84,6 @@ const getRandomUsers = async (req, res) => {
     let { size } = req.query;
 
     const users = await User.find().select("-password");
-
-    console.log("caaa");
-
     const randomUsers = [];
 
     if (size > users.length) {
