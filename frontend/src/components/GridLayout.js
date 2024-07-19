@@ -6,7 +6,7 @@ const GridLayout = (props) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={7}>
         {left}
       </Grid>
       <Grid item md={4} sx={{ display: { xs: "none", md: "block" } }}>
