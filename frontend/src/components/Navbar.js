@@ -25,7 +25,7 @@ const Navbar = () => {
   return (
     <Stack mb={2} className="nav">
       <div className="nav-links">
-        <span>SocialX</span>
+        <span className="socialx-title">SocialX</span>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
             size="small"

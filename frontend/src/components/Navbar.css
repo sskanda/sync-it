@@ -10,3 +10,10 @@
   flex-direction: row;
   gap: 4rem;
 }
+
+.socialx-title {
+  font-family: Arial, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #5b71ec;
+}

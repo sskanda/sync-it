@@ -10,6 +10,7 @@ import { getUser } from "../api/users";
 import PostBrowser from "../components/PostBrowser";
 import Loading from "../components/Loading";
 import UserComments from "../components/UserComments";
+import FindUsers from "../components/FindUsers";
 
 const UserProfile = () => {
   const [tab, setTab] = useState("posts");
@@ -64,7 +65,12 @@ const UserProfile = () => {
             )}
           </Stack>
         }
-        right={<Profile profile={profile}></Profile>}
+        right={
+          <Stack spacing={2}>
+            <Profile profile={profile}></Profile>
+            <FindUsers></FindUsers>
+          </Stack>
+        }
       />
     </Container>
   );
