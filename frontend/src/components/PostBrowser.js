@@ -5,7 +5,7 @@ import "./PostBrowser.css";
 import Loading from "./Loading";
 import PostCard from "./PostCard";
 import { getPosts, getUserLikedPosts } from "../api/posts";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import SortPosts from "./SortPosts";
 
 const PostBrowser = (props) => {
@@ -15,6 +15,7 @@ const PostBrowser = (props) => {
   const [search] = useSearchParams();
   const [sortBy, setSortBy] = useState("-createdAt");
 
+  const params = useParams();
   const searchExists =
     search && search.get("search") && search.get("search").length > 0;
 
@@ -64,7 +65,7 @@ const PostBrowser = (props) => {
 
   useEffect(() => {
     fetchPosts();
-  }, [sortBy, search]);
+  }, [sortBy, search, params.id]);
 
   return (
     <>

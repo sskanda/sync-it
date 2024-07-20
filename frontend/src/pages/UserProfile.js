@@ -45,7 +45,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [params.id]);
 
   return (
     <Container>
