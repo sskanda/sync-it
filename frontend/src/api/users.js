@@ -1,13 +1,16 @@
 const signup = async (user) => {
   try {
-    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
+    const res = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/api/users/register`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      }
+    );
     return await res.json();
   } catch (err) {
     console.log(err);
