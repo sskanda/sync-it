@@ -1,6 +1,6 @@
 const signup = async (user) => {
   try {
-    const res = await fetch("http://localhost:5000/api/users/register", {
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -16,14 +16,17 @@ const signup = async (user) => {
 
 const login = async (user) => {
   try {
-    const res = await fetch("http://localhost:5000" + "/api/users/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
+    const res = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}` + "/api/users/login",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      }
+    );
     return await res.json();
   } catch (err) {
     console.log(err);
@@ -33,7 +36,7 @@ const login = async (user) => {
 const getUser = async (params) => {
   try {
     const res = await fetch(
-      "http://localhost:5000" + "/api/users/" + params.id
+      `${process.env.REACT_APP_BACKEND_URL}` + "/api/users/" + params.id
     );
     return res.json();
   } catch (err) {
@@ -44,8 +47,8 @@ const getUser = async (params) => {
 const getRandomUsers = async (query) => {
   try {
     const res = await fetch(
-      "http://localhost:5000/" +
-        "api/users/random?" +
+      `${process.env.REACT_APP_BACKEND_URL}` +
+        "/api/users/random?" +
         new URLSearchParams(query)
     );
     return res.json();
