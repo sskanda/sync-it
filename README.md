@@ -1,6 +1,6 @@
 # Social Network
 A dynamic social platform for enthusiasts to share, discuss, discover the latest trends and explore diverse conversations on various interests and topics. 
-Live at https://sync-it.netlify.app/ (might take some time to load as it's hosted on free tier).
+Live at https://sync-it.netlify.app/ (might take a minute to load as it's hosted on free tier).
 
 ## Features
  - Explore user profiles and browse their history of posts, likes and comments
