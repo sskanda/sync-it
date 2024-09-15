@@ -9,8 +9,26 @@ import SearchView from "./pages/SearchView";
 import UserProfile from "./pages/UserProfile";
 import theme from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    const logView = async () => {
+      try {
+        await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/api/views/viewcount`,
+          {
+            method: "GET",
+          }
+        );
+      } catch (error) {
+        console.error("Error logging view:", error);
+      }
+    };
+
+    logView();
+  }, []); // Runs once on component mount
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
