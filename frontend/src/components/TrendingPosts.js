@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Card, Stack, Typography } from "@mui/material";
-import { MdLeaderboard } from "react-icons/md";
 import { FiTrendingUp } from "react-icons/fi";
 import HorizontalStack from "./util/HorizontalStack";
 import "./TrendingPosts.css";
@@ -16,9 +15,7 @@ const TrendingPosts = () => {
 
   const fetchPosts = async () => {
     const query = { sortBy: "-likeCount" };
-
     const data = await getPosts(query);
-
     const topPosts = [];
 
     if (data && data.data) {
@@ -28,7 +25,6 @@ const TrendingPosts = () => {
     }
 
     setPosts(topPosts);
-
     setLoading(false);
   };
 
@@ -37,7 +33,7 @@ const TrendingPosts = () => {
   }, []);
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={1}> {/* Reduced spacing from 2 to 1 */}
       <Card className="head">
         <HorizontalStack>
           <FiTrendingUp />

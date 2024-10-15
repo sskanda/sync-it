@@ -1,4 +1,4 @@
-# Social Network
+# Community Hub
 A dynamic social platform for enthusiasts to share, discuss, discover the latest trends and explore diverse conversations on various interests and topics. 
 Live at https://sync-it.netlify.app/
 
