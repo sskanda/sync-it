@@ -18,7 +18,8 @@ Live at https://sync-it.netlify.app/
 ![image](https://github.com/user-attachments/assets/47731ab8-e207-4aa8-9f96-42aa5a61daaa)
 
 ### User/Profile Activity
-![image](https://github.com/user-attachments/assets/b43083c1-3f2a-49e5-a8f2-8f27553cf517)
+![image](https://github.com/user-attachments/assets/7c4a6556-4230-433c-ad28-080569fd8d86)
+
 
 ### Search Posts
 ![image](https://github.com/user-attachments/assets/b765969e-563f-434a-95c7-299233bd38b4)
