@@ -9,7 +9,7 @@ const UserAvatar = ({ username, height, width }) => {
         width: width,
         backgroundColor: "lightgray",
       }}
-      src={`https://api.multiavatar.com/${username}.svg`}
+      src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${username}`}
     />
   );
 };
