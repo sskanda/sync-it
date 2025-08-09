@@ -1,3 +1,4 @@
+const dotenv = require('dotenv');
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -5,6 +6,8 @@ const app = express();
 const posts = require("./routes/posts");
 const users = require("./routes/users");
 const comments = require("./routes/comments");
+
+dotenv.config();
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
@@ -31,7 +34,7 @@ app.use("/api/users", users);
 app.use("/api/comments", comments);
 
 // MongoDB Connection and Server Start
-const uri = `mongodb+srv://skz:admin@cluster0.c7xj5qh.mongodb.net/socialX?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = process.env.MONGO_URI;;
 
 const clientOptions = {
   serverApi: { version: "1", strict: true, deprecationErrors: true },
