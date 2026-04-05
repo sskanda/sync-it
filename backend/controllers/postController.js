@@ -35,10 +35,27 @@ const getPosts = async (req, res) => {
     if (req.body != null) username = req.body;
 
     if (!sortBy) sortBy = "-createdAt";
-    let posts = await Post.find()
-      .populate("poster", "-password")
-      .sort(sortBy)
-      .lean();
+    
+    let posts;
+    if (sortBy === "trending") {
+      // Simple trending score: likes + comments
+      posts = await Post.find()
+        .populate("poster", "-password")
+        .lean();
+      
+      // Calculate trending score and sort
+      posts = posts.map(post => ({
+        ...post,
+        trendingScore: (post.likeCount || 0) + (post.commentCount || 0)
+      }));
+      
+      posts.sort((a, b) => b.trendingScore - a.trendingScore);
+    } else {
+      posts = await Post.find()
+        .populate("poster", "-password")
+        .sort(sortBy)
+        .lean();
+    }
 
     if (author) {
       posts = posts.filter((post) => post.poster.username == author);

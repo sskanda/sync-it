@@ -14,7 +14,7 @@ const TrendingPosts = () => {
   const user = isLoggedIn();
 
   const fetchPosts = async () => {
-    const query = { sortBy: "-likeCount" };
+    const query = { sortBy: "trending" };
     const data = await getPosts(query);
     const topPosts = [];
 
