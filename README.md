@@ -9,6 +9,7 @@ Live at https://sync-it.netlify.app/
  - Like and Unlike Posts
  - User registration and login
  - Create, read, update and delete posts
+ - Trending Posts - Discover popular content
 
 ## Preview
 ### Explore
